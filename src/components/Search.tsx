@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import 'bulma/css/bulma.css';
 
-const API_KEY = "f3480a414f9736068eeb857ad5f68151";
+const API_KEY = "YOUR_API_KEY";
 
 export type WeatherData = {
   id: number;
