@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import 'bulma/css/bulma.css';
 
+
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
 export type WeatherData = {
