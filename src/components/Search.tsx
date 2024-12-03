@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import 'bulma/css/bulma.css';
+import { buildWeatherUrl } from "../utils/api";
 
 
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+
 
 export type WeatherData = {
   id: number;
@@ -32,26 +33,15 @@ const Search: React.FC<SearchProps> = ({ onSave, closeModal }) => {
         return;
       }
 
-      setError(""); 
-      setWeather(null);
-
-      let url = `https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
-
-      if (/^\d{5}$/.test(query)) {
-        url += `&zip=${query}`;
-      } else if (/^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/.test(query)) {
-        const [lat, lon] = query.split(",");
-        url += `&lat=${lat}&lon=${lon}`;
-      } else {
-        url += `&q=${query}`;
-      }
-
+      setError("");
+      const url = buildWeatherUrl(query); 
       const response = await axios.get(url);
       setWeather(response.data);
-    } catch (err: any) {
+    } catch (err) {
       setError("Unable to fetch weather data. Please check your input or try again.");
     }
   };
+
 
   const handleSaveForecast = () => {
     if (weather) {

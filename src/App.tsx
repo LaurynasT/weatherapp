@@ -3,6 +3,7 @@ import Search from "./components/Search";
 import { WeatherData } from "./components/Search";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CiSquareRemove } from "react-icons/ci";
 
 function App() {
   const [savedForecasts, setSavedForecasts] = useState<WeatherData[]>([]);
@@ -87,7 +88,7 @@ function App() {
         <div>
           {displayedForecasts.map((forecast) => (
             <div key={forecast.id} className="box">
-              <div className="columns is-vcentered">
+              <div className="columns is-vcentered is-size-4">
                 <div className="column is-three-quarters">
                   <strong>
                     {forecast.name}, {forecast.sys.country}
@@ -109,10 +110,11 @@ function App() {
                 </div>
                 <div className="column">
                   <button
-                    className="button is-danger is-small"
+                  
+                    
                     onClick={() => handleRemoveForecast(forecast.id)}
                   >
-                    Remove
+                    <CiSquareRemove style={{ fontSize: "2.5rem" }} />
                   </button>
                 </div>
               </div>
