@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import 'bulma/css/bulma.css';
 
-const API_KEY = "f3480a414f9736068eeb857ad5f68151";
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
 export type WeatherData = {
   id: number;
@@ -11,11 +11,12 @@ export type WeatherData = {
   main: { temp: number; humidity: number; pressure: number };
   wind: { speed: number };
   weather: { description: string; icon: string }[];
+
 };
 
 type SearchProps = {
   onSave: (forecast: WeatherData) => void;
-  closeModal: () => void; // Function to close the modal
+  closeModal: () => void; 
 };
 
 const Search: React.FC<SearchProps> = ({ onSave, closeModal }) => {
@@ -53,8 +54,8 @@ const Search: React.FC<SearchProps> = ({ onSave, closeModal }) => {
 
   const handleSaveForecast = () => {
     if (weather) {
-      onSave(weather);  // Save the forecast
-      closeModal();     // Close the modal after saving
+      onSave(weather);  
+      closeModal();    
     }
   };
 
@@ -96,6 +97,17 @@ const Search: React.FC<SearchProps> = ({ onSave, closeModal }) => {
             <p>Wind Speed: {weather.wind.speed} m/s</p>
             <p>Sunrise: {formatTime(weather.sys.sunrise)}</p>
             <p>Sunset: {formatTime(weather.sys.sunset)}</p>
+            {weather.weather[0] && (
+              <div className="has-text-centered">
+                <img
+                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                  alt={weather.weather[0].description}
+                  title={weather.weather[0].description}
+                />
+                <p>{weather.weather[0].description}</p>
+              </div>
+            )}
+
             <button className="button is-success mt-3" onClick={handleSaveForecast}>
               Save Forecast
             </button>
